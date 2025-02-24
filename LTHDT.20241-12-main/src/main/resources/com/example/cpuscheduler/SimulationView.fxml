@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="666.0" prefWidth="999.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.cpuscheduler.controller.SimulationController">
+   <right>
+      <VBox prefHeight="666.0" prefWidth="333.0" style="-fx-border-color: black;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="titleLabel" text="Label">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox>
+               <children>
+                  <TableView fx:id="table" prefHeight="295.0" prefWidth="311.0">
+                     <columns>
+                        <TableColumn fx:id="idColumn" prefWidth="56.0" text="ID" />
+                        <TableColumn fx:id="arrivalTimeColumn" prefWidth="91.0" text="Arrival Time" />
+                        <TableColumn fx:id="burstTimeColumn" prefWidth="89.0" text="Burst Time" />
+                        <TableColumn fx:id="priorityColumn" prefWidth="74.0" text="Priority" />
+                     </columns>
+                     <VBox.margin>
+                        <Insets left="11.0" right="11.0" />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="calculateButton" mnemonicParsing="false" onAction="#handleCalculate" prefHeight="40.0" prefWidth="89.0" text="Calculate">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="resetButton" mnemonicParsing="false" onAction="#handleReset" prefHeight="40.0" prefWidth="89.0" text="Reset">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="helpButton" mnemonicParsing="false" onAction="#handleHelp" prefHeight="40.0" prefWidth="61.0" text="Help" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="quantumTimeLabel" prefHeight="27.0" prefWidth="123.0" text="Quantum Time">
+                     <HBox.margin>
+                        <Insets right="30.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="quantumTimeTextField" prefHeight="39.0" prefWidth="75.0" />
+               </children>
+            </HBox>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="10.0" prefWidth="75.0" text="Arrival Time">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="arrivalTimeTextField" prefHeight="39.0" prefWidth="83.0">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="addButton" mnemonicParsing="false" onAction="#handleAdd" prefHeight="40.0" prefWidth="64.0" text="Add" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="10.0" prefWidth="75.0" text="Burst Time">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="burstTimeTextField" prefHeight="39.0" prefWidth="83.0">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#handleDelete" prefHeight="40.0" prefWidth="64.0" text="Delete" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="priorityLabel" prefHeight="10.0" prefWidth="75.0" text="Priority">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="priorityTextField" prefHeight="39.0" prefWidth="83.0">
+                           <HBox.margin>
+                              <Insets right="30.0" />
+                           </HBox.margin>
+                        </TextField>
+                        <Button fx:id="deleteAllButton" mnemonicParsing="false" onAction="#handleDeleteAll" prefHeight="40.0" prefWidth="64.0" text="Delete All">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </right>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT">
+               <children>
+                  <Label fx:id="titleResultLabel" text="Gantt Chart">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="20.0" top="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#handleSwap" prefHeight="40.0" prefWidth="70.0" text="Swap">
+                     <HBox.margin>
+                        <Insets left="440.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <StackPane fx:id="stackPane">
+               <children>
+                  <TableView fx:id="resultTable">
+                    <columns>
+                      <TableColumn fx:id="idResultColumn" prefWidth="69.0" text="ID" />
+                      <TableColumn fx:id="arrivalTimeResultColumn" prefWidth="98.0" text="Arrival Time" />
+                        <TableColumn fx:id="burstTimeResultColumn" prefWidth="104.0" text="Burst Time" />
+                        <TableColumn fx:id="finishTimeResultColumn" prefWidth="113.0" text="Finish Time" />
+                        <TableColumn fx:id="turnaroundTimeResultColumn" prefWidth="115.0" text="Turnaround Time" />
+                        <TableColumn fx:id="waitingTimeResultColumn" prefWidth="123.0" text="Waiting Time" />
+                    </columns>
+                     <StackPane.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </StackPane.margin>
+                  </TableView>
+                  <ScrollPane fx:id="scrollPane" prefHeight="330.0" prefViewportHeight="385.0" prefViewportWidth="626.0" prefWidth="626.0" style="-fx-border-color: brown;">
+                     <content>
+                        <Pane fx:id="pane" prefHeight="4000.0" prefWidth="606.0">
+                           <VBox.margin>
+                              <Insets left="20.0" right="20.0" />
+                           </VBox.margin>
+                        </Pane>
+                     </content>
+                     <StackPane.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </StackPane.margin>
+                  </ScrollPane>
+               </children>
+            </StackPane>
+            <HBox fx:id="hBox" alignment="CENTER" prefHeight="39.0">
+               <children>
+                  <Button fx:id="skipButton" mnemonicParsing="false" text="Skip" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Label text="Time Metrics">
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox style="-fx-border-color: brown;">
+               <children>
+                  <Label fx:id="averageWaitingTimeLabel" text="Average Waiting Time: ">
+                     <VBox.margin>
+                        <Insets left="30.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="turnaroundTimeLabel" text="Turnaround Time:">
+                     <VBox.margin>
+                        <Insets left="30.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label fx:id="cpuUtilizationLabel" text="CPU Utilization:">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="30.0" top="15.0" />
+                     </VBox.margin>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin>
+            </VBox>
+            <HBox alignment="CENTER">
+               <children>
+                  <Button fx:id="goBackButton" mnemonicParsing="false" onAction="#handleGoBack" prefHeight="39.0" prefWidth="89.0" text="Go Back">
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="5.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>
